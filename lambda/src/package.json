@@ -1,0 +1,8 @@
+{
+  "name": "lambda-code",
+  "description": "Process new objects in an S3 bucket",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "ecs-code",
+  "version": "0.1.0",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "aws-sdk": "2.742.0"
+  }
+}

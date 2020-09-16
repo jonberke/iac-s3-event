@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Lambda S3 file processing
+
+# Must specify new S3 bucket name to avoid circular dependency: https://github.com/aws/aws-sam-cli/issues/1794
+Parameters:
+  bucketName:
+    Type: String
+    Description: "REQUIRED: Unique S3 bucket name that will trigger processing"
+
+Resources:
+  bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref bucketName
+
+  table:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - 
+          AttributeName: "id"
+          AttributeType: "S"
+      KeySchema: 
+        - 
+          AttributeName: "id"
+          KeyType: "HASH"
+      BillingMode: PROVISIONED
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 10
+
+  handler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/
+      Handler: index.handler
+      Runtime: nodejs12.x
+      Environment:
+        Variables:
+          DDB_TABLE: !Ref table
+      Events:
+        S3NewObjectEvent:
+          Type: S3
+          Properties:
+            Bucket: !Ref bucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: suffix
+                    Value: .json
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref bucketName
+        - DynamoDBWritePolicy:
+            TableName: !Ref table
