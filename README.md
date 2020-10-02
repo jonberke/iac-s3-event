@@ -1,6 +1,6 @@
 # About
 This repo contains the source code referred to in the [event-driven infrastructure as code blog
-post](https://out-with-the-old.theberkes.com/posts/event-driven-iac/).
+post](https://blog.OutWithTheOld.info/posts/event-driven-iac/).
 
 Each directory takes a different approach at solving the problem:
 
