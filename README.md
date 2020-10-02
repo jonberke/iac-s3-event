@@ -26,13 +26,13 @@ Additionally, you'll need to run `npm install` in each subdirectory before you c
 
 ## ECS and Lambda
 
-* `npm run build`
-* `cdk deploy`
+1. `npm run build`
+1. `cdk deploy`
 
 ## SAM
 
-* `sam build`
-* `sam deploy --guided`
+1. `sam build`
+1. `sam deploy --guided`
 
 # Usage
 The easiest way to test a deployment is with the AWS console.
@@ -58,4 +58,4 @@ the ECS deployment took about a minute because of the container launch time.
 ## SAM
 
 1. Empty the deployment's S3 bucket
-1. Delete the stack from the AWS console or run `aws cloudformation delete-stack --stack-name iac-sam`
+1. Delete the stack from the AWS console or run `aws cloudformation delete-stack --stack-name <stack-name>`
